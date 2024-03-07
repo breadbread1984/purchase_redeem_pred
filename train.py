@@ -44,6 +44,18 @@ def main(unused_argv):
   for epoch in range(FLAGS.epoch):
     train_iter = iter(dataset)
     for x, y in train_iter:
-      x = tf.cast(x, dtype = tf.float32)
-      y = tf.cast(y, dtype = tf.float32)
-      
+      x = (tf.cast(x, dtype = tf.float32) - 8962232.) / (952479658. - 8962232.)
+      y = (tf.cast(y, dtype = tf.float32) - 1616635.) / (547295931. - 1616635.)
+      states = [tf.zeros((1, FLAGS.channel)) for i in range(FLAGS.layer_num)]
+      with tf.GradientTape() as tape:
+        pred, *latest_states = model([x, *states])
+        loss = tf.keras.losses.MeanAbsoluteError()(y, pred)
+      grads = tape.gradient(loss, model.trainable_variables)
+      optimizer.apply_gradients(zip(grads, model.trainable_variables))
+    print('epoch %d MAE: %f' % (epoch, loss))
+    checkpoint.save(join(FLAGS.ckpt, 'ckpt'))
+
+if __name__ == "__main__":
+  add_options()
+  app.run(main)
+

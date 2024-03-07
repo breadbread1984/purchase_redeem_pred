@@ -1,2 +1,0 @@
-purchase range: [8962232, 952479658]
-redeem range: [1616635 547295931]
