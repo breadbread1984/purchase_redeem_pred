@@ -22,15 +22,23 @@ def parse_function(serialized_example):
     features = {
       'x': tf.io.FixedLenFeature((), dtype = tf.string),
       'y': tf.io.FixedLenFeature((), dtype = tf.string),
-      'len': tf.io.FixedLenFeature((), dtype = tf.int32)
+      'len': tf.io.FixedLenFeature((), dtype = tf.int32),
+      'min': tf.io.FixedLenFeature((2,), dtype = tf.int32),
+      'max': tf.io.FixedLenFeature((2,), dtype = tf.int32),
     }
   )
-  x = tf.io.parse_tensor(feature['x'], out_type = tf.int64)
-  y = tf.io.parse_tensor(feature['y'], out_type = tf.int64)
+  x = tf.io.parse_tensor(feature['x'], out_type = tf.float32)
+  y = tf.io.parse_tensor(feature['y'], out_type = tf.float32)
   length = tf.cast(feature['len'], dtype = tf.int32)
   x = tf.reshape(x, (length, 2))
   y = tf.reshape(y, (length, 2))
-  return tf.cast(x, dtype = tf.int32), tf.cast(y, dtype = tf.int32)
+  min_value = tf.cast(feature['min'], dtype = tf.float32)
+  min_value = tf.reshape(min_value, (1, 2))
+  max_value = tf.cast(feature['max'], dtype = tf.float32)
+  max_value = tf.reshape(max_value, (1, 2))
+  x = (x - min_value) / (max_value - min_value)
+  y = (y - min_value) / (max_value - min_value)
+  return x, y
 
 def main(unused_argv):
   model = Predictor(rnn_layer_num = FLAGS.layer_num, channel = FLAGS.channel)
@@ -44,8 +52,8 @@ def main(unused_argv):
   for epoch in range(FLAGS.epoch):
     train_iter = iter(dataset)
     for x, y in train_iter:
-      x = (tf.cast(x, dtype = tf.float32) - 8962232.) / (952479658. - 8962232.)
-      y = (tf.cast(y, dtype = tf.float32) - 1616635.) / (547295931. - 1616635.)
+      # purchase range: [8962232, 952479658]
+      # redeem range: [1616635, 547295931]
       states = [tf.zeros((1, FLAGS.channel)) for i in range(FLAGS.layer_num)]
       with tf.GradientTape() as tape:
         pred, *latest_states = model([x, *states])
