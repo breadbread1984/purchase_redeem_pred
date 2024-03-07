@@ -3,8 +3,8 @@
 from absl import flags, app
 from os.path import exists, join
 from csv import DictReader
-import pickle
 import numpy as np
+import tensorflow as tf
 
 FLAGS = flags.FLAGS
 
