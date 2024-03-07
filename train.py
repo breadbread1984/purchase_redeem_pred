@@ -42,7 +42,7 @@ def parse_function(serialized_example):
 
 def main(unused_argv):
   model = Predictor(rnn_layer_num = FLAGS.layer_num, channel = FLAGS.channel)
-  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ExponentialDecay(FLAGS.lr, 2, 0.80))
+  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ExponentialDecay(FLAGS.lr, 2, 0.96))
   dataset = tf.data.TFRecordDataset(FLAGS.dataset).map(parse_function).batch(1)
 
   if not exists(FLAGS.ckpt): mkdir(FLAGS.ckpt)
@@ -60,7 +60,7 @@ def main(unused_argv):
         loss = tf.keras.losses.MeanAbsoluteError()(y, pred)
       grads = tape.gradient(loss, model.trainable_variables)
       optimizer.apply_gradients(zip(grads, model.trainable_variables))
-    print('epoch %d MAE: %f' % (epoch, loss))
+    print('epoch %d lr: %f MAE: %f' % (epoch, optimizer.lr, loss))
     checkpoint.save(join(FLAGS.ckpt, 'ckpt'))
 
 if __name__ == "__main__":
