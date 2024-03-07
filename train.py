@@ -42,7 +42,7 @@ def parse_function(serialized_example):
 
 def main(unused_argv):
   model = Predictor(rnn_layer_num = FLAGS.layer_num, channel = FLAGS.channel)
-  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ExponentialDecay(FLAGS.lr, 2, 0.98))
+  optimizer = tf.keras.optimizers.Adam(tf.keras.optimizers.schedules.ExponentialDecay(FLAGS.lr, 5, 0.98))
   dataset = tf.data.TFRecordDataset(FLAGS.dataset).map(parse_function).batch(1)
 
   if not exists(FLAGS.ckpt): mkdir(FLAGS.ckpt)
