@@ -9,7 +9,7 @@ from models import Predictor
 FLAGS = flags.FLAGS
 
 def add_options():
-  flags.DEFINE_string('lr', default = 1e-3, help = 'learning rate')
+  flags.DEFINE_float('lr', default = 1e-3, help = 'learning rate')
   flags.DEFINE_string('dataset', default = 'dataset.tfrecord', help = 'path to tfrecord')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'paht to checkpoint')
   flags.DEFINE_integer('epoch', default = 5, help = 'epoch')
