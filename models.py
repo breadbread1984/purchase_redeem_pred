@@ -9,5 +9,5 @@ def Predictor(rnn_layer_num = 2, channel = 32):
   outputs = rnn(inputs, initial_state = states)
   results, latest_states = outputs[0], outputs[1:] # results.shape = (batch, seq_len, channel)
   results = tf.keras.layers.Dense(2)(results) # results.shape = (batch, seq_len, 2)
-  return tf.keras.Model(inputs = inputs, outputs = [results, *latest_states])
+  return tf.keras.Model(inputs = [inputs, *states], outputs = [results, *latest_states])
 
