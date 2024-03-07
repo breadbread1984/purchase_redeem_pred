@@ -27,11 +27,11 @@ def parse_function(serialized_example):
       'max': tf.io.FixedLenFeature((2,), dtype = tf.int64),
     }
   )
-  x = tf.io.parse_tensor(feature['x'], out_type = tf.float32)
-  y = tf.io.parse_tensor(feature['y'], out_type = tf.float32)
+  x = tf.io.parse_tensor(feature['x'], out_type = tf.int64)
+  y = tf.io.parse_tensor(feature['y'], out_type = tf.int64)
   length = tf.cast(feature['len'], dtype = tf.int32)
-  x = tf.reshape(x, (length, 2))
-  y = tf.reshape(y, (length, 2))
+  x = tf.cast(tf.reshape(x, (length, 2)), dtype = tf.float32)
+  y = tf.cast(tf.reshape(y, (length, 2)), dtype = tf.float32)
   min_value = tf.cast(feature['min'], dtype = tf.float32)
   min_value = tf.reshape(min_value, (1, 2))
   max_value = tf.cast(feature['max'], dtype = tf.float32)
