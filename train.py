@@ -22,9 +22,9 @@ def parse_function(serialized_example):
     features = {
       'x': tf.io.FixedLenFeature((), dtype = tf.string),
       'y': tf.io.FixedLenFeature((), dtype = tf.string),
-      'len': tf.io.FixedLenFeature((), dtype = tf.int32),
-      'min': tf.io.FixedLenFeature((2,), dtype = tf.int32),
-      'max': tf.io.FixedLenFeature((2,), dtype = tf.int32),
+      'len': tf.io.FixedLenFeature((), dtype = tf.int64),
+      'min': tf.io.FixedLenFeature((2,), dtype = tf.int64),
+      'max': tf.io.FixedLenFeature((2,), dtype = tf.int64),
     }
   )
   x = tf.io.parse_tensor(feature['x'], out_type = tf.float32)
