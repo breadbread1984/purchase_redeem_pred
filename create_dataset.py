@@ -29,7 +29,7 @@ def main(unused_argv):
   writer = tf.io.TFRecordWriter(FLAGS.output)
   sample = tf.train.Example(features = tf.train.Features(
     feature = {
-      'x': tf.train.Feature(bytes_list = tf.train.BytesList(value = [tf.io.serialize_tensor(sequence).numpy()]))
+      'x': tf.train.Feature(bytes_list = tf.train.BytesList(value = [tf.io.serialize_tensor(sequence).numpy()])),
       'len': tf.train.Feature(int64_list = tf.train.Int64List(value = [sequence.shape[0]]))
     }
   ))
