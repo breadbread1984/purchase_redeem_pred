@@ -31,11 +31,15 @@ def main(unused_argv):
     feature = {
       'x': tf.train.Feature(bytes_list = tf.train.BytesList(value = [tf.io.serialize_tensor(sequence[:-1]).numpy()])),
       'y': tf.train.Feature(bytes_list = tf.train.BytesList(value = [tf.io.serialize_tensor(sequence[1:]).numpy()])),
-      'len': tf.train.Feature(int64_list = tf.train.Int64List(value = [sequence.shape[0] - 1]))
+      'len': tf.train.Feature(int64_list = tf.train.Int64List(value = [sequence.shape[0] - 1])),
+      'min': tf.train.Feature(int64_list = tf.train.Int64List(value = [np.min(sequence[:,0]), np.min(sequence[:,1])])),
+      'max': tf.train.Feature(int64_list = tf.train.Int64List(value = [np.max(sequence[:,0]), np.max(sequence[:,1])]))
     }
   ))
   writer.write(sample.SerializeToString())
   writer.close()
+  print('purchase range: [%d, %d]' % (np.min(sequence[:,0]), np.max(sequence[:,0])))
+  print('redeem range: [%d %d]' % (np.min(sequence[:,1]), np.max(sequence[:,1])))
 
 if __name__ == "__main__":
   add_options()
