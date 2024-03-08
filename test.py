@@ -65,7 +65,7 @@ def main(unused_argv):
   with open(FLAGS.output, 'w') as f:
     for i, output in enumerate(outputs):
       date = 20140901 + i
-      f.write('%d,%d,%d' % (date, output[0], output[1]))
+      f.write('%d,%d,%d\n' % (date, output[0], output[1]))
 
 if __name__ == "__main__":
   add_options()
