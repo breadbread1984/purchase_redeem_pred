@@ -13,7 +13,7 @@ def add_options():
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'path to ckpt directory')
   flags.DEFINE_integer('channel', default = 32, help = 'channel')
   flags.DEFINE_integer('layer_num', default = 2, help = 'layer number')
-  flags.DEFINE_string('output_csv', default = 'output.csv', help = 'path to output csv')
+  flags.DEFINE_string('output', default = 'output.csv', help = 'path to output csv')
 
 def parse_function(serialized_example):
   feature = tf.io.parse_single_example(
