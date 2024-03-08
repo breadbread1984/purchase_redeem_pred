@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from absl import flags, app
+from os.path import join
 import tensorflow as tf
 from models import Predictor
 
