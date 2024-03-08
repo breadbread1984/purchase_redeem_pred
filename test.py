@@ -55,7 +55,7 @@ def main(unused_argv):
   for i in range(30):
     preds, *states = model([inputs, *states]) # pred.shape = (1,1,2)
     inputs = preds
-    outputs = tf.concate([outputs, preds], axis = 1) # outputs.shape = (1, seq_len+1, 2)
+    outputs = tf.concat([outputs, preds], axis = 1) # outputs.shape = (1, seq_len+1, 2)
   outputs = outputs.numpy()
   scale = np.array([952479658. - 8962232., 547295931. - 1616635.], dtype = np.float32).reshape((1,1,2))
   min_values = np.array([8962232., 1616635.], dtype = np.float32).reshape((1,1,2))
