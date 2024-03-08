@@ -12,7 +12,7 @@ def add_options():
   flags.DEFINE_float('lr', default = 1e-2, help = 'learning rate')
   flags.DEFINE_string('dataset', default = 'dataset.tfrecord', help = 'path to tfrecord')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'paht to checkpoint')
-  flags.DEFINE_integer('epoch', default = 600, help = 'epoch')
+  flags.DEFINE_integer('epoch', default = 300, help = 'epoch')
   flags.DEFINE_integer('channel', default = 16, help = 'channel')
   flags.DEFINE_integer('layer_num', default = 2, help = 'layer num')
 
@@ -57,10 +57,10 @@ def main(unused_argv):
       states = [tf.zeros((1, FLAGS.channel)) for i in range(FLAGS.layer_num)]
       with tf.GradientTape() as tape:
         pred, *latest_states = model([x, *states])
-        loss = tf.keras.losses.MeanAbsoluteError()(y, pred)
+        loss = tf.keras.losses.MeanSquaredError()(y, pred)
       grads = tape.gradient(loss, model.trainable_variables)
       optimizer.apply_gradients(zip(grads, model.trainable_variables))
-    print('epoch %d lr: %f MAE: %f' % (epoch, optimizer.lr, loss))
+    print('epoch %d lr: %f MSE: %f' % (epoch, optimizer.lr, loss))
   checkpoint.save(join(FLAGS.ckpt, 'ckpt'))
 
 if __name__ == "__main__":
