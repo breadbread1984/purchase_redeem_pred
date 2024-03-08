@@ -3,6 +3,7 @@
 from absl import flags, app
 from os.path import join
 import tensorflow as tf
+import numpy as np
 from models import Predictor
 
 FLAGS = flags.FLAGS
