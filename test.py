@@ -39,7 +39,7 @@ def parse_function(serialized_example):
 def main(unused_argv):
   dataset = tf.data.TFRecordDataset(FLAGS.dataset).map(parse_function).batch(1)
   states = [tf.zeros((1, FLAGS.channel)) for i in range(FLAGS.layer_num)]
-  for x, y in dataset
+  for x, y in dataset:
     # NOTE: x.shape = (1, seq_len - 1, 2) # [t0,tn-1]
     # NOTE: y.shape = (1, seq_len - 1, 2) # [t1,tn]
     preds, *states = model([x, *states]) # pred.shape = (1, seq_len, 2)
