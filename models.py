@@ -11,7 +11,6 @@ def Predictor(rnn_layer_num = 2, channel = 32):
   results = tf.keras.layers.LayerNormalization()(results)
   results = tf.keras.layers.Dense(16, activation = tf.keras.activations.gelu)(results)
   results = tf.keras.layers.Dropout(0.1)(results)
-  results = tf.keras.layers.LayerNormalization()(results)
   results = tf.keras.layers.Dense(2)(results) # results.shape = (batch, seq_len, 2)
   return tf.keras.Model(inputs = [inputs, *states], outputs = [results, *latest_states])
 
