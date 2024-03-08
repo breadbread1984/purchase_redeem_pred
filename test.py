@@ -2,6 +2,7 @@
 
 from absl import flags, app
 import tensorflow as tf
+from models import Predictor
 
 FLAGS = flags.FLAGS
 
@@ -37,6 +38,9 @@ def parse_function(serialized_example):
   return x, y
 
 def main(unused_argv):
+  model = Predictor(rnn_layer_num = FLAGS.layer_num, channel = FLAGS.channel)
+  checkpoint = tf.train.Checkpoint(model = model, optimizer = optimizer)
+  checkpoint.restore(tf.train.latest_checkpoint(join(FLAGS.ckpt, 'ckpt')))
   dataset = tf.data.TFRecordDataset(FLAGS.dataset).map(parse_function).batch(1)
   states = [tf.zeros((1, FLAGS.channel)) for i in range(FLAGS.layer_num)]
   for x, y in dataset:
