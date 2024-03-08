@@ -7,7 +7,7 @@ FLAGS = flags.FLAGS
 
 def add_options():
   flags.DEFINE_string('dataset', default = 'dataset.tfrecord', help = 'path to tfrecord')
-  flags.DEFINE_string('ckpt', default = None, help = 'path to ckpt directory')
+  flags.DEFINE_string('ckpt', default = 'ckpt', help = 'path to ckpt directory')
   flags.DFEINE_integer('channel', default = 32, help = 'channel')
   flags.DEFINE_integer('layer_num', default = 2, help = 'layer number')
   flags.DEFINE_string('output_csv', default = 'output.csv', help = 'path to output csv')
