@@ -40,6 +40,7 @@ def main(unused_argv):
   writer.close()
   print('purchase range: [%d, %d]' % (np.min(sequence[:,0]), np.max(sequence[:,0])))
   print('redeem range: [%d, %d]' % (np.min(sequence[:,1]), np.max(sequence[:,1])))
+  print('date range: [%s, %s]' % (data[0][0], data[-1][0]))
 
 if __name__ == "__main__":
   add_options()
