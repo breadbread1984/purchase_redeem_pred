@@ -9,11 +9,11 @@ from models import Predictor
 FLAGS = flags.FLAGS
 
 def add_options():
-  flags.DEFINE_float('lr', default = 1e-3, help = 'learning rate')
+  flags.DEFINE_float('lr', default = 1e-2, help = 'learning rate')
   flags.DEFINE_string('dataset', default = 'dataset.tfrecord', help = 'path to tfrecord')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'paht to checkpoint')
-  flags.DEFINE_integer('epoch', default = 300, help = 'epoch')
-  flags.DEFINE_integer('channel', default = 32, help = 'channel')
+  flags.DEFINE_integer('epoch', default = 600, help = 'epoch')
+  flags.DEFINE_integer('channel', default = 16, help = 'channel')
   flags.DEFINE_integer('layer_num', default = 2, help = 'layer num')
 
 def parse_function(serialized_example):
